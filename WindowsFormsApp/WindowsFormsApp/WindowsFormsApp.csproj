@@ -46,19 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DesktopAppForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DesktopAppForm.Designer.cs">
-      <DependentUpon>DesktopAppForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Model.cs" />
+    <Compile Include="Model\Model.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel.cs" />
-    <EmbeddedResource Include="DesktopAppForm.resx">
+    <Compile Include="ViewModel\ViewModel.cs" />
+    <Compile Include="View\DesktopAppForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\DesktopAppForm.Designer.cs">
       <DependentUpon>DesktopAppForm.cs</DependentUpon>
-    </EmbeddedResource>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -68,6 +65,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\DesktopAppForm.resx">
+      <DependentUpon>DesktopAppForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
