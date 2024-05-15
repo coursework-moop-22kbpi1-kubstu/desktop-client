@@ -10,7 +10,7 @@ namespace WindowsFormsApp
     public class ViewModel
     {
         public DesktopAppForm view;
-        public Model model;
+        public Model.Model model;
         public Color FColor = Color.Black;
         public Color BColor = Color.White;
     }

@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Model.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
@@ -56,6 +58,15 @@
     <Compile Include="View\DesktopAppForm.Designer.cs">
       <DependentUpon>DesktopAppForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\ControllersHTTP\AuthController.cs" />
+    <Compile Include="Model\ControllersHTTP\HTTPManager.cs" />
+    <Compile Include="Model\ControllersHTTP\UserController.cs" />
+    <Compile Include="Model\Entities\Notification.cs" />
+    <Compile Include="Model\Entities\Profile.cs" />
+    <Compile Include="Model\Entities\Role.cs" />
+    <Compile Include="Model\Entities\User.cs" />
+    <Compile Include="Model\Model.cs" />
+    <Compile Include="Model\UserRepository.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -68,6 +79,7 @@
     <EmbeddedResource Include="View\DesktopAppForm.resx">
       <DependentUpon>DesktopAppForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
