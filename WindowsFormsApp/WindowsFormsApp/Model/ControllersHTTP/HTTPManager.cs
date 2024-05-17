@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace TestHTTPClient.Model.ControllersHTTP
+namespace WindowsFormsApp.Model.ControllersHTTP
 {
     public class HTTPManager
     {
@@ -28,7 +28,7 @@ namespace TestHTTPClient.Model.ControllersHTTP
                 Console.WriteLine("Error " + ex.ToString());
                 Console.ReadLine();
             }
-            return null;
+            throw new Exception("Ошибка при попытке запроса");
         }
         protected static async Task<HttpResponseMessage> Get(string address)
         {
@@ -42,7 +42,7 @@ namespace TestHTTPClient.Model.ControllersHTTP
                 Console.WriteLine("Error " + ex.ToString());
                 Console.ReadLine();
             }
-            return null;
+            throw new Exception("Ошибка при попытке запроса");
         }
     }
 }

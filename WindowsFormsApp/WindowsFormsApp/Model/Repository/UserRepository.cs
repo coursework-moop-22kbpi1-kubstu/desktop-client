@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsFormsApp.Model;
+using WindowsFormsApp.Model.Repository;
 
 namespace TestHTTPClient.Model
 {
-    public class UserRepository
+    public class UserRepository : IRepository<User>
     {
         List<User> users;
         public UserRepository()
@@ -26,7 +27,7 @@ namespace TestHTTPClient.Model
             }
             users.Add(user);
         }
-        public User GetId(int id)
+        public User Get(int id)
         {
             for (int i = 0; i < users.Count; i++)
             {
@@ -37,9 +38,13 @@ namespace TestHTTPClient.Model
             }
             return null;
         }
-        public User[] GetAll(int id)
+        public User[] GetAll()
         {
             return users.ToArray();
+        }
+        public void Delete(int id)
+        {
+            users.RemoveAt(id);
         }
     }
 }

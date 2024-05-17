@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WindowsFormsApp.Model;
 using WindowsFormsApp.Model.Entities;
 
-namespace TestHTTPClient.Model.ControllersHTTP
+namespace WindowsFormsApp.Model.ControllersHTTP
 {
     internal class UserController : HTTPManager
     {
@@ -29,7 +29,7 @@ namespace TestHTTPClient.Model.ControllersHTTP
                     int id = Convert.ToInt32(jsonFormatDataArr[i].Split(':')[1]);
                     string username = jsonFormatDataArr[++i].Split(':')[1];
                     string login = jsonFormatDataArr[++i].Split(':')[1];
-                    Role role = new Role(jsonFormatDataArr[++i].Split(':')[1]);
+                    string role = jsonFormatDataArr[++i].Split(':')[1];
 
                     User newUser = new User(id, username, login, role);
                     resultListUser.Add(newUser);
@@ -37,7 +37,7 @@ namespace TestHTTPClient.Model.ControllersHTTP
             }
             for (int i = 0; i < resultListUser.Count; i++)
             {
-                Console.Write("id: " + resultListUser[i].Id + "   UserName:" + resultListUser[i].UserName+ "   Login:" + resultListUser[i].Login+ "   Role:" + resultListUser[i].Role + "   ");
+                Console.Write("id: " + resultListUser[i].Id + "   UserName:" + resultListUser[i].UserName + "   Login:" + resultListUser[i].Login + "   Role:" + resultListUser[i].Role + "   ");
                 Console.WriteLine();
             }
             return resultListUser;

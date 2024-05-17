@@ -13,14 +13,14 @@ namespace WindowsFormsApp.Model
         protected int id;
         protected string userName;
         protected string login;
-        protected Role role;
+        protected string role;
 
         public int Id { get { return id; } }
         public string UserName { get { return userName; } }
         public string Login { get { return login; } }
-        public Role Role { get { return role; } }
+        public string Role { get { return role; } }
 
-        public User(int id, string userName, string login, Role role)
+        public User(int id, string userName, string login, string role)
         {
             this.id = id;
             this.userName = userName;
