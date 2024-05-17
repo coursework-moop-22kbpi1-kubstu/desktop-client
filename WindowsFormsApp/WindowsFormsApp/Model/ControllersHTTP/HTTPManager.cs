@@ -11,16 +11,12 @@ namespace WindowsFormsApp.Model.ControllersHTTP
     public class HTTPManager
     {
         protected static HttpClient httpClient = new HttpClient();
-        protected static async Task<HttpResponseMessage> Post(string address, Dictionary<string, string> dictionaryParams)
+        public static async Task<HttpResponseMessage> Post(string address, Dictionary<string, string> dictionaryParams)
         {
             try
             {
                 Uri uri = new Uri(address);
-                //FormUrlEncodedContent content = new FormUrlEncodedContent(dictionaryParams);
-                StringContent content = new StringContent(
-                    JsonConvert.SerializeObject(dictionaryParams),
-                    Encoding.UTF8,
-                    "application/json");
+                StringContent content = new StringContent(JsonConvert.SerializeObject(dictionaryParams), Encoding.UTF8, "application/json");
                 return await httpClient.PostAsync(address, content);
             }
             catch
@@ -28,12 +24,37 @@ namespace WindowsFormsApp.Model.ControllersHTTP
                 throw new Exception("Ошибка при попытке запроса");
             }
         }
-        protected static async Task<HttpResponseMessage> Get(string address)
+        public static async Task<HttpResponseMessage> Post(string address, string jsonObj)
         {
             try
             {
                 Uri uri = new Uri(address);
-                return await httpClient.GetAsync(address);
+                StringContent content = new StringContent(jsonObj, Encoding.UTF8, "application/json");
+                return await httpClient.PostAsync(address, content);
+            }
+            catch
+            {
+                throw new Exception("Ошибка при попытке запроса");
+            }
+        }
+        public static async Task<HttpResponseMessage> Get(string address, string GETParameters)
+        {
+            try
+            {
+                Uri uri = new Uri(address);
+                return httpClient.GetAsync(address + "?" + GETParameters).Result;
+            }
+            catch
+            {
+                throw new Exception("Ошибка при попытке запроса");
+            }
+        }
+        public static async Task<HttpResponseMessage> Get(string address)
+        {
+            try
+            {
+                Uri uri = new Uri(address);
+                return httpClient.GetAsync(address).Result;
             }
             catch
             {

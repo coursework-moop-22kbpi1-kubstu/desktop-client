@@ -18,8 +18,5 @@ namespace WindowsFormsApp.Model
         public Model()
         {
         }
-        public void UpdateListUsers()
-        {
-        }
     }
 }

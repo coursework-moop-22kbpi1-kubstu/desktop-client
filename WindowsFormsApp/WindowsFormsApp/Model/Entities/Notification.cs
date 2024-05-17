@@ -35,5 +35,13 @@ namespace WindowsFormsApp.Model.Entities
             get { return userOwner; }
             set { userOwner = value; }
         }
+        public Notification(int id, string title, string message, DateTime createdAt, User userOwner)
+        {
+            this.id = id;
+            this.title = title;
+            this.message = message;
+            this.createdAt = createdAt;
+            this.userOwner = userOwner;
+        }
     }
 }

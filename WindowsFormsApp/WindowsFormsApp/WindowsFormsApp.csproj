@@ -50,12 +50,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Entities\IEntity.cs" />
+    <Compile Include="Model\ProviderFactory\INotificationProviderAPIFactory.cs" />
+    <Compile Include="Model\ProviderFactory\IProviderAPIFactory.cs" />
+    <Compile Include="Model\ProviderFactory\IUserProviderAPIFactory.cs" />
+    <Compile Include="Model\ProviderFactory\NotificationProviderPIFactory.cs" />
+    <Compile Include="Model\ProviderFactory\UserProviderAPIFactory.cs" />
     <Compile Include="Model\Provider\NotificationProviderAPI.cs" />
     <Compile Include="Model\Provider\UserProviderAPI.cs" />
-    <Compile Include="Model\Provider\INotificationAPI.cs" />
+    <Compile Include="Model\Provider\INotificationProviderAPI.cs" />
     <Compile Include="Model\Provider\IProviderAPI.cs" />
     <Compile Include="Model\Provider\IUserProvideAPI.cs" />
-    <Compile Include="Model\Repository\IRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
@@ -70,7 +74,6 @@
     <Compile Include="Model\Entities\Notification.cs" />
     <Compile Include="Model\Entities\User.cs" />
     <Compile Include="Model\Model.cs" />
-    <Compile Include="Model\Repository\UserRepository.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -97,8 +100,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\ControllersHTTP\NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
