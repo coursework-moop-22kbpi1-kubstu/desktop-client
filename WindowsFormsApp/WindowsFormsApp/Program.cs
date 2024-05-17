@@ -17,10 +17,10 @@ namespace WindowsFormsApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Model model = new Model();
+            Model.Model model = new Model.Model();
             ViewModel viewModel = new ViewModel();
             DesktopAppForm view = new DesktopAppForm();
-            model.viewModel = viewModel;
+            model.ViewModel = viewModel;
             viewModel.view = view;
             viewModel.model = model;
             view.viewModel = viewModel;

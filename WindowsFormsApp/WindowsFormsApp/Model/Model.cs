@@ -4,14 +4,14 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using TestHTTPClient.Model.ControllersHTTP;
+using WindowsFormsApp.Model.ControllersHTTP;
 using WindowsFormsApp.Model.Entities;
 
 namespace WindowsFormsApp.Model
 {
     public class Model
     {
-        UserController userController = new UserController();
+        ControllersHTTP.UserController userController = new ControllersHTTP.UserController();
 
         public ViewModel ViewModel;
         private User[] allUser;
