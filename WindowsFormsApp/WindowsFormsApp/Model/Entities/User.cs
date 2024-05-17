@@ -8,17 +8,29 @@ using WindowsFormsApp.Model.Entities;
 
 namespace WindowsFormsApp.Model
 {
-    public class User
+    public class User : IEntity
     {
         protected int id;
         protected string userName;
         protected string login;
         protected string role;
 
-        public int Id { get { return id; } }
-        public string UserName { get { return userName; } }
-        public string Login { get { return login; } }
-        public string Role { get { return role; } }
+        public int Id
+        {
+            get { return id; }
+        }
+        public string UserName
+        {
+            get { return userName; }
+        }
+        public string Login
+        {
+            get { return login; }
+        }
+        public string Role
+        {
+            get { return role; }
+        }
 
         public User(int id, string userName, string login, string role)
         {

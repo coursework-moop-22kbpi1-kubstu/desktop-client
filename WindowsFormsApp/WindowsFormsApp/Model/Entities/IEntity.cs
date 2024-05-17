@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFormsApp.Model.ControllersHTTP
+namespace WindowsFormsApp.Model.Entities
 {
-    internal class AuthController : HTTPManager
+    public class IEntity
     {
     }
 }

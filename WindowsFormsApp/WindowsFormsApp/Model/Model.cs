@@ -11,18 +11,15 @@ namespace WindowsFormsApp.Model
 {
     public class Model
     {
-        ControllersHTTP.UserController userController = new ControllersHTTP.UserController();
+        ControllersHTTP.UserProviderAPI userController = new ControllersHTTP.UserProviderAPI();
 
         public ViewModel ViewModel;
-        private User[] allUser;
-        private Profile profile;
 
         public Model()
         {
         }
         public void UpdateListUsers()
         {
-            allUser = userController.GetAllUsers().ToArray();
         }
     }
 }

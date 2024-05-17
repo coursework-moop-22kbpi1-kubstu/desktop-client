@@ -23,12 +23,10 @@ namespace WindowsFormsApp.Model.ControllersHTTP
                     "application/json");
                 return await httpClient.PostAsync(address, content);
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine("Error " + ex.ToString());
-                Console.ReadLine();
+                throw new Exception("Ошибка при попытке запроса");
             }
-            throw new Exception("Ошибка при попытке запроса");
         }
         protected static async Task<HttpResponseMessage> Get(string address)
         {
@@ -37,12 +35,10 @@ namespace WindowsFormsApp.Model.ControllersHTTP
                 Uri uri = new Uri(address);
                 return await httpClient.GetAsync(address);
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine("Error " + ex.ToString());
-                Console.ReadLine();
+                throw new Exception("Ошибка при попытке запроса");
             }
-            throw new Exception("Ошибка при попытке запроса");
         }
     }
 }

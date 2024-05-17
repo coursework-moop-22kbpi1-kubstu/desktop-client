@@ -49,6 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Entities\IEntity.cs" />
+    <Compile Include="Model\Provider\NotificationProviderAPI.cs" />
+    <Compile Include="Model\Provider\UserProviderAPI.cs" />
+    <Compile Include="Model\Provider\INotificationAPI.cs" />
+    <Compile Include="Model\Provider\IProviderAPI.cs" />
+    <Compile Include="Model\Provider\IUserProvideAPI.cs" />
+    <Compile Include="Model\Repository\IRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
@@ -58,15 +65,12 @@
     <Compile Include="View\DesktopAppForm.Designer.cs">
       <DependentUpon>DesktopAppForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\ControllersHTTP\AuthController.cs" />
     <Compile Include="Model\ControllersHTTP\HTTPManager.cs" />
-    <Compile Include="Model\ControllersHTTP\UserController.cs" />
+    <Compile Include="Model\ControllersHTTP\UserProviderAPI.cs" />
     <Compile Include="Model\Entities\Notification.cs" />
-    <Compile Include="Model\Entities\Profile.cs" />
-    <Compile Include="Model\Entities\Role.cs" />
     <Compile Include="Model\Entities\User.cs" />
     <Compile Include="Model\Model.cs" />
-    <Compile Include="Model\UserRepository.cs" />
+    <Compile Include="Model\Repository\UserRepository.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -92,6 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\ControllersHTTP\NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
