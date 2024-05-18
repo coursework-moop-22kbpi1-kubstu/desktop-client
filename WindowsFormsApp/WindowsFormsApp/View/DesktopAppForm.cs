@@ -17,7 +17,12 @@ namespace WindowsFormsApp
         public ViewModel viewModel;
         public DesktopAppForm()
         {
+        }
+        public void Init()
+        {
             InitializeComponent();
+            viewModel.StartAuthorizationProcess();
+
         }
         private void control_MouseEnterOrLeave(object sender, EventArgs e)
         {
@@ -25,6 +30,28 @@ namespace WindowsFormsApp
             ((Control)sender).BackColor = ((Control)sender).ForeColor;
             ((Control)sender).ForeColor = c;
         }
+        #region property // свойства
+        public Panel PnlContent
+        {
+            get { return pnlContent; }
+            set { pnlContent = value; }
+        }
+        public Panel PnlUserLogin
+        {
+            get { return pnlUserLogin; }
+            set { pnlUserLogin = value; }
+        }
+        public Panel PnlRegistrationUser
+        {
+            get { return pnlRegistrationUser; }
+            set { pnlRegistrationUser = value; }
+        }
+        public Panel PnlMainMenu
+        {
+            get { return pnlMainMenu; }
+            set { pnlMainMenu = value; }
+        }
+        #endregion
 
         #region Win Btn
         int maxSizeFormW = 1400;
@@ -93,6 +120,72 @@ namespace WindowsFormsApp
                 (pnlUserLogin.Width - pnlUserLoginMiddleCenter.Width) >> 1,
                 (pnlUserLogin.Height - pnlUserLoginMiddleCenter.Height) >> 1
                 );
+        }
+        private void LineMainMenuLeftMenu_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.None)
+            {
+                if (pnlMainMenuLeftMenu.Width + e.X < pnlMainMenuLeftMenu.Width - 90)
+                {
+                    pnlMainMenuLeftMenu.Width += e.X;
+                }
+                else
+                {
+                    pnlMainMenuLeftMenu.Width = pnlMainMenuLeftMenu.Width - 90;
+                }
+            }
+        }
+
+
+        private void btnUserRegistration_Click(object sender, EventArgs e)
+        {
+            viewModel.EndAuthorizationProcess();
+            viewModel.StartRegistrationProcess();
+        }
+
+        private void btnUserLogin_Click(object sender, EventArgs e)
+        {
+            viewModel.EndAuthorizationProcess();
+            viewModel.StartWorkProcess();
+        }
+
+        private void btnSearchUser_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSetting_Click(object sender, EventArgs e)
+        {
+
+            viewModel.EndWorkProcess();
+            viewModel.EndRegistrationProcess();
+            viewModel.StartAuthorizationProcess();
+        }
+
+        private void btnPnlRegistrationUser_Click(object sender, EventArgs e)
+        {
+            viewModel.EndRegistrationProcess();
+            viewModel.StartAuthorizationProcess();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            viewModel.EndWorkProcess();
+            viewModel.EndRegistrationProcess();
+            viewModel.StartAuthorizationProcess();
+        }
+
+        private void PlaceholderTextDelete_MouseDown(object sender, MouseEventArgs e)
+        {
+            ((TextBox)sender).Text = string.Empty;
+            ((TextBox)sender).ForeColor = Color.Black;
+        }
+        private void PlaceholderTextDeleteForPassword_MouseDown(object sender, MouseEventArgs e)
+        {
+            ((TextBox)sender).Text = string.Empty;
+            ((TextBox)sender).ForeColor = Color.Black;
+            ((TextBox)sender).PasswordChar = '*';
         }
     }
 }

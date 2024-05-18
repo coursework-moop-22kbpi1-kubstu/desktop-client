@@ -21,9 +21,10 @@ namespace WindowsFormsApp
             ViewModel viewModel = new ViewModel();
             DesktopAppForm view = new DesktopAppForm();
             model.ViewModel = viewModel;
-            viewModel.view = view;
+            viewModel.Form = view;
             viewModel.model = model;
             view.viewModel = viewModel;
+            view.Init();
 
             Application.Run(view);
         }
