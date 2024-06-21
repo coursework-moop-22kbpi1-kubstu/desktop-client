@@ -1,47 +1,112 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using WindowsFormsApp.Model.ControllersHTTP;
 using WindowsFormsApp.Model.Entities;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace WindowsFormsApp.Model.Provider
 {
     public class NotificationProviderAPI : INotificationProviderAPI
     {
-        public void ChangeNotification(Notification notification)
+        string address = "http://83.147.247.105:8080/notifications";
+
+        public async Task<HttpResponseMessage> ChangeNotificationAsync(Notification notification)
         {
-            throw new NotImplementedException();
+            return await HTTPManager.PatchAsync(address + "/" + notification.Id, JsonConvert.SerializeObject(notification));
         }
 
-        public void ChangeNotification(Notification notification, int id)
+        public async Task<HttpResponseMessage> DeleteByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await HTTPManager.DeleteAsync(address + "/" + id);
+        }
+        public async void DeleteAllAsync()
+        {
+            Notification[] notifications;
+            do
+            {
+                notifications = await GetAllSentNotificationsAsync(0, 10);
+                foreach (Notification notification in notifications)
+                {
+                    _ = DeleteByIdAsync(notification.Id);
+                }
+            } while (notifications.Length > 0);
         }
 
-        public void CreateNotification(Notification notification)
+        // Просмотр истории принятых уведомлений
+        public async Task<Notification[]> GetAllAsync(int page, int size)
         {
-            throw new NotImplementedException();
+            return JsonConvert.DeserializeObject<Notification[]>(await HTTPManager.GetAsync(address + "/history", $"page={page}&size={size}").Result.Content.ReadAsStringAsync());
         }
 
-        public void DeleteAll()
+        // Просмотр истории отправленных уведомлений
+        public async Task<Notification[]> GetAllSentNotificationsAsync(int page, int size)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage responseMessage = await HTTPManager.GetAsync(address + "/my", $"page={page}&size={size}");
+            return JsonConvert.DeserializeObject<Notification[]>(responseMessage.Content.ReadAsStringAsync().Result);
         }
 
-        public void DeleteById(int id)
+        public async Task<Notification> GetOfAsync(int id)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage responseMessage = await HTTPManager.GetAsync(address + "/send/" + id);
+            string str = await responseMessage.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Notification[]>(str)[0];
         }
 
-        public Notification[] GetAll(int page, int size)
+        #region SendNotificationAsync
+        public async Task<HttpResponseMessage> SendNotificationAsync(string title, string message, int idRecipient)
         {
-            throw new NotImplementedException();
+            string jsonObj = "{\"title\":\"" + title + "\",\"message\":\"" + message + "\"" + "}";
+            return await HTTPManager.PostAsync(address + "/send/" + idRecipient, jsonObj);
         }
-
-        public Notification GetOf(int id)
+        public async Task<HttpResponseMessage> SendNotificationAsync(Notification notification, int idRecipient)
         {
-            throw new NotImplementedException();
+            string jsonObj = "{\"title\":\"" + notification.Title + "\",\"message\":\"" + notification.Message + "\"" + "}";
+            return await HTTPManager.PostAsync(address + "/send/" + idRecipient, jsonObj);
         }
+        public async Task<HttpResponseMessage> SendNotificationAsync(string title, string message, int[] idRecipient)
+        {
+            string userIds = "\"";
+            int Length = idRecipient.Length;
+            for (int i = 0; i < Length - 1; i++)
+            {
+                userIds += idRecipient[i] + ",";
+            }
+            userIds += idRecipient[Length - 1] + "\"";
+            string jsonObj = "{" +
+                "\"userIds\": " + userIds + "," +
+                "\"userRole\": null," +
+                "\"notification\": {" +
+                    "\"title\": \"" + title + "\"," +
+                    "\"message\": \"" + message + "\"" +
+                    "}" +
+                "}";
+            return await HTTPManager.PostAsync(address + "/dispatch", jsonObj);
+        }
+        public async Task<HttpResponseMessage> SendNotificationAsync(string title, string message, string role)
+        {
+            if (role != "ADMIN" && role != "EMPLOYEE")
+            {
+                role = "USER";
+            }
+            string jsonObj = "{" +
+                "\"userIds\": null," +
+                "\"userRole\": \"" + role + "\"," +
+                "\"notification\": {" +
+                    "\"title\": \"" + title + "\"," +
+                    "\"message\": \"" + message + "\"" +
+                    "}" +
+                "}";
+            return await HTTPManager.PostAsync(address + "/dispatch", jsonObj);
+        }
+        #endregion
     }
 }

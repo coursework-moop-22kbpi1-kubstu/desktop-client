@@ -10,14 +10,14 @@ namespace WindowsFormsApp.Model.ProviderFactory
 {
     public class NotificationProviderPIFactory : INotificationProviderAPIFactory
     {
-        public INotificationProviderAPI GetProviderAPI(Notification notification)
+        public INotificationProviderAPI GetProviderAPI()
         {
             return new NotificationProviderAPI();
         }
 
-        public IProviderAPI<Notification> GetProviderAPI(IEntity entities)
+        IProviderAPI<Notification> IProviderAPIFactory<Notification>.GetProviderAPI()
         {
-            return ((INotificationProviderAPIFactory)this).GetProviderAPI(entities);
+            return new NotificationProviderAPI();
         }
     }
 }

@@ -4,31 +4,23 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 
 namespace WindowsFormsApp.Model.ControllersHTTP
 {
-    public class HTTPManager
+    public static class HTTPManager
     {
-        protected static HttpClient httpClient = new HttpClient();
-        public static async Task<HttpResponseMessage> Post(string address, Dictionary<string, string> dictionaryParams)
+        private static HttpClient httpClient = new HttpClient();
+        public static HttpClient HttpClient
         {
-            try
-            {
-                Uri uri = new Uri(address);
-                StringContent content = new StringContent(JsonConvert.SerializeObject(dictionaryParams), Encoding.UTF8, "application/json");
-                return await httpClient.PostAsync(address, content);
-            }
-            catch
-            {
-                throw new Exception("Ошибка при попытке запроса");
-            }
+            get { return httpClient; }
+            //set { httpClient = value; }
         }
-        public static async Task<HttpResponseMessage> Post(string address, string jsonObj)
+        public static async Task<HttpResponseMessage> PostAsync(string address, string jsonObj)
         {
             try
             {
-                Uri uri = new Uri(address);
                 StringContent content = new StringContent(jsonObj, Encoding.UTF8, "application/json");
                 return await httpClient.PostAsync(address, content);
             }
@@ -37,24 +29,43 @@ namespace WindowsFormsApp.Model.ControllersHTTP
                 throw new Exception("Ошибка при попытке запроса");
             }
         }
-        public static async Task<HttpResponseMessage> Get(string address, string GETParameters)
+        public static async Task<HttpResponseMessage> GetAsync(string address, string GETParameters = null)
         {
+            string arg;
+            if (GETParameters != null && GETParameters != "") { arg = address + "?" + GETParameters; }
+            else { arg = address; }
             try
             {
-                Uri uri = new Uri(address);
-                return httpClient.GetAsync(address + "?" + GETParameters).Result;
+                return await httpClient.GetAsync(arg);
             }
             catch
             {
                 throw new Exception("Ошибка при попытке запроса");
             }
         }
-        public static async Task<HttpResponseMessage> Get(string address)
+        public static async Task<HttpResponseMessage> PatchAsync(string address, string jsonObj)
         {
             try
             {
-                Uri uri = new Uri(address);
-                return httpClient.GetAsync(address).Result;
+                StringContent content = new StringContent(jsonObj, Encoding.UTF8, "application/json");
+                var method = new HttpMethod("PATCH");
+                var request = new HttpRequestMessage(method, address)
+                {
+                    Content = content
+                };
+
+                return await httpClient.SendAsync(request);
+            }
+            catch
+            {
+                throw new Exception("Ошибка при попытке запроса");
+            }
+        }
+        public static async Task<HttpResponseMessage> DeleteAsync(string address)
+        {
+            try
+            {
+                return await httpClient.DeleteAsync(address);
             }
             catch
             {

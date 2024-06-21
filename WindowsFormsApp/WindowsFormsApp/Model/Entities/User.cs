@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsFormsApp.Model.Entities;
 
-namespace WindowsFormsApp.Model
+namespace WindowsFormsApp.Model.Entities
 {
     public class User : IEntity
     {

@@ -7,50 +7,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 using System.Runtime.InteropServices;
 
 namespace WindowsFormsApp
 {
     public partial class DesktopAppForm : Form
     {
-        public ViewModel viewModel;
+        public View.View view;
         public DesktopAppForm()
         {
         }
         public void Init()
         {
             InitializeComponent();
-            viewModel.StartAuthorizationProcess();
 
+            this.btnUserLogin.Click += new System.EventHandler(view.StartLogin);
+            this.btnUserRegistration.Click += new System.EventHandler(view.StartRegistration);
+
+            this.btn0peningRetistrationForm.Click += new System.EventHandler(view.OpenFormRegistration);
+            this.btn0peningLoginForm.Click += new System.EventHandler(view.OpenFormLogin);
+
+            //this.btnSetting.Click += new System.EventHandler(view.btnSetting_Click);
+            //this.btnRegistrationUserReturnPnlUserLogin.Click += new System.EventHandler(view.button2_Click);
+
+            this.inputEnteringUserLogin.TextChanged += new System.EventHandler(view.inputEnteringUserLogin_TextChanged);
+            this.inputEnteringUserPassword.TextChanged += new System.EventHandler(view.inputEnteringUserPassword_TextChanged);
+            this.inputRegistrationUserName.TextChanged += new System.EventHandler(view.inputRegistrationUserName_TextChanged);
+            this.inputRegistrationUserLogin.TextChanged += new System.EventHandler(view.inputRegistrationUserLogin_TextChanged);
+            this.inputRegistrationPassword1.TextChanged += new System.EventHandler(view.inputRegistrationPassword_TextChanged);
+            this.inputRegistrationPassword2.TextChanged += new System.EventHandler(view.inputRegistrationPassword_TextChanged);
         }
+
+
         private void control_MouseEnterOrLeave(object sender, EventArgs e)
         {
             Color c = ((Control)sender).BackColor;
             ((Control)sender).BackColor = ((Control)sender).ForeColor;
             ((Control)sender).ForeColor = c;
         }
+
         #region property // свойства
-        public Panel PnlContent
-        {
-            get { return pnlContent; }
-            set { pnlContent = value; }
-        }
-        public Panel PnlUserLogin
-        {
-            get { return pnlUserLogin; }
-            set { pnlUserLogin = value; }
-        }
-        public Panel PnlRegistrationUser
-        {
-            get { return pnlRegistrationUser; }
-            set { pnlRegistrationUser = value; }
-        }
-        public Panel PnlMainMenu
-        {
-            get { return pnlMainMenu; }
-            set { pnlMainMenu = value; }
-        }
+
+
         #endregion
 
         #region Win Btn
@@ -114,13 +112,6 @@ namespace WindowsFormsApp
         }
         #endregion
 
-        private void pnlUserLogin_SizeChanged(object sender, EventArgs e)
-        {
-            pnlUserLoginMiddleCenter.Location = new Point(
-                (pnlUserLogin.Width - pnlUserLoginMiddleCenter.Width) >> 1,
-                (pnlUserLogin.Height - pnlUserLoginMiddleCenter.Height) >> 1
-                );
-        }
         private void LineMainMenuLeftMenu_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.None)
@@ -136,56 +127,47 @@ namespace WindowsFormsApp
             }
         }
 
-
-        private void btnUserRegistration_Click(object sender, EventArgs e)
-        {
-            viewModel.EndAuthorizationProcess();
-            viewModel.StartRegistrationProcess();
-        }
-
-        private void btnUserLogin_Click(object sender, EventArgs e)
-        {
-            viewModel.EndAuthorizationProcess();
-            viewModel.StartWorkProcess();
-        }
-
-        private void btnSearchUser_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnSetting_Click(object sender, EventArgs e)
-        {
-
-            viewModel.EndWorkProcess();
-            viewModel.EndRegistrationProcess();
-            viewModel.StartAuthorizationProcess();
-        }
-
-        private void btnPnlRegistrationUser_Click(object sender, EventArgs e)
-        {
-            viewModel.EndRegistrationProcess();
-            viewModel.StartAuthorizationProcess();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-            viewModel.EndWorkProcess();
-            viewModel.EndRegistrationProcess();
-            viewModel.StartAuthorizationProcess();
-        }
-
+        #region textBoxEventMouseDown
         private void PlaceholderTextDelete_MouseDown(object sender, MouseEventArgs e)
         {
-            ((TextBox)sender).Text = string.Empty;
-            ((TextBox)sender).ForeColor = Color.Black;
+            if (sender is TextBox)
+            {
+                if (((TextBox)sender).ForeColor != Color.Black)
+                {
+                    ((TextBox)sender).ForeColor = Color.Black;
+                    ((TextBox)sender).Text = string.Empty;
+                }
+            }
         }
         private void PlaceholderTextDeleteForPassword_MouseDown(object sender, MouseEventArgs e)
         {
-            ((TextBox)sender).Text = string.Empty;
-            ((TextBox)sender).ForeColor = Color.Black;
-            ((TextBox)sender).PasswordChar = '*';
+            if (sender is TextBox)
+            {
+                if (((TextBox)sender).ForeColor != Color.Black)
+                {
+                    ((TextBox)sender).ForeColor = Color.Black;
+                    ((TextBox)sender).Text = string.Empty;
+                    ((TextBox)sender).PasswordChar = '*';
+                }
+            }
         }
+        #endregion
+
+        #region Login & Registration _SizeChanged Event
+        private void pnlUserLogin_SizeChanged(object sender, EventArgs e)
+        {
+            pnlUserLoginMiddleCenter.Location = new Point(
+                (pnlUserLogin.Width - pnlUserLoginMiddleCenter.Width) >> 1,
+                (pnlUserLogin.Height - pnlUserLoginMiddleCenter.Height) >> 1
+                );
+        }
+        private void pnlRegistrationUser_SizeChanged(object sender, EventArgs e)
+        {
+            pnlUserRegistrationMiddleCenter.Location = new Point(
+                (pnlUserRegistration.Width - pnlUserRegistrationMiddleCenter.Width) >> 1,
+                (pnlUserRegistration.Height - pnlUserRegistrationMiddleCenter.Height) >> 1
+                );
+        }
+        #endregion
     }
 }

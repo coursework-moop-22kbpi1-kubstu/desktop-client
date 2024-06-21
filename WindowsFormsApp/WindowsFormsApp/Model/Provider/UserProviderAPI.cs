@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsFormsApp.Model.ControllersHTTP;
+using WindowsFormsApp.Model.Entities;
 
 namespace WindowsFormsApp.Model.Provider
 {
@@ -21,60 +23,59 @@ namespace WindowsFormsApp.Model.Provider
             public T[] content;
         }
 
-        string address = "http://83.147.247.105:8080/users";
-        HTTPManager HTTPManager = new HTTPManager();
+        const string address = "http://83.147.247.105:8080/users";
+        //HTTPManager HTTPManager = new HTTPManager();
 
-        public User[] GetAll(int page, int size)
+        public async Task<HttpResponseMessage> DeleteByIdAsync(int id)
         {
-            try
-            {
-                ServerResponse<User> a = JsonConvert.DeserializeObject<ServerResponse<User>>(
-                    HTTPManager.Get(
-                            address, $"page={page}&size={size}"
-                        ).Result.Content.ReadAsStringAsync().Result
-                    );
-                //if (a == null)
-                //{
-                //    return new User[0];
-                //}
-                return a.content;
-            }
-            catch
-            {
-                return new User[0];
-            }
+            return await HTTPManager.DeleteAsync(address + "/" + id);
         }
-        public User GetOf(int id)
+        public async void DeleteAllAsync()
         {
-            try
+            User[] arrUser = await GetAllAsync(0, 20);
+
+            while (arrUser.Length > 0)
             {
-                ServerResponse<User> a = JsonConvert.DeserializeObject<ServerResponse<User>>(
-                HTTPManager.Get(
-                                address + "/" + id
-                            ).Result.Content.ReadAsStringAsync().Result
-                        );
-                if (a != null && a.content.Length != 0)
+                foreach (User user in arrUser)
                 {
-                    return a.content[0];
+                    _ = DeleteByIdAsync(user.Id);
                 }
-                throw new Exception("Пользователь с заданным id:" + id + " не был найден");
+                arrUser = await GetAllAsync(0, 20);
             }
-            catch
+        }
+        public async Task<User[]> GetAllAsync(int page, int size)
+        {
+            ServerResponse<User> res = JsonConvert.DeserializeObject<ServerResponse<User>>(
+                await (
+                    await HTTPManager.GetAsync(address, $"page={page}&size={size}")
+                ).Content.ReadAsStringAsync()
+            );
+            return res.content;
+        }
+        public static async Task<User[]> GetAllStaticAsync(int page, int size)
+        {
+            ServerResponse<User> res = JsonConvert.DeserializeObject<ServerResponse<User>>(
+                await HTTPManager.GetAsync(
+                        address, $"page={page}&size={size}"
+                    ).Result.Content.ReadAsStringAsync()
+                );
+            return res.content;
+        }
+        public async Task<User> GetOfAsync(int id)
+        {
+            HttpResponseMessage responseMessage = await HTTPManager.GetAsync(address + "/" + id);
+            return JsonConvert.DeserializeObject<ServerResponse<User>>(
+                    await responseMessage.Content.ReadAsStringAsync()
+                ).content[0];
+        }
+        public async Task<User[]> UsersFromListAsync(IEnumerable<int> listId)
+        {
+            List<User> resultList = new List<User>();
+            foreach (int id in listId)
             {
-                throw new Exception("Не удалось найти пользователя с id:" + id);
+                resultList.Add(await GetOfAsync(id));
             }
-        }
-        public void DeleteAll()
-        {
-            throw new NotImplementedException();
-        }
-        public void DeleteById(int id)
-        {
-            throw new NotImplementedException();
-        }
-        public User[] UsersFromList(IEnumerable<int> listId)
-        {
-            throw new NotImplementedException();
+            return resultList.ToArray();
         }
     }
 }

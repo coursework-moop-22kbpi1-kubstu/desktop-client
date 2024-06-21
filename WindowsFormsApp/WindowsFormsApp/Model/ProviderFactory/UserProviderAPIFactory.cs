@@ -10,14 +10,14 @@ namespace WindowsFormsApp.Model.ProviderFactory
 {
     internal class UserProviderAPIFactory : IUserProviderAPIFactory
     {
-        public IUserProvideAPI GetProviderAPI(Notification notification)
+        public IUserProvideAPI GetProviderAPI()
         {
             return new UserProviderAPI();
         }
 
-        public IProviderAPI<User> GetProviderAPI(IEntity entities)
+        IProviderAPI<User> IProviderAPIFactory<User>.GetProviderAPI()
         {
-            return ((IUserProviderAPIFactory)this).GetProviderAPI(entities);
+            return new UserProviderAPI();
         }
     }
 }

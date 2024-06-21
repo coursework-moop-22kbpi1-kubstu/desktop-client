@@ -10,6 +10,6 @@ namespace WindowsFormsApp.Model.ProviderFactory
 {
     public interface IProviderAPIFactory<T> where T : IEntity
     {
-        IProviderAPI<T> GetProviderAPI(Entities.IEntity entities);
+        IProviderAPI<T> GetProviderAPI();
     }
 }

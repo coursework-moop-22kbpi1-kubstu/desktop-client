@@ -17,16 +17,25 @@ namespace WindowsFormsApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Model.Model model = new Model.Model();
-            ViewModel viewModel = new ViewModel();
-            DesktopAppForm view = new DesktopAppForm();
-            model.ViewModel = viewModel;
-            viewModel.Form = view;
-            viewModel.model = model;
-            view.viewModel = viewModel;
-            view.Init();
+            DesktopAppForm desktopAppForm = new DesktopAppForm();
 
-            Application.Run(view);
+            Model.Model model = new Model.Model();
+            ViewModel.ViewModel viewModel = new ViewModel.ViewModel();
+            View.View view = new View.View(desktopAppForm);
+            desktopAppForm.view = view;
+
+            viewModel.model = model;
+            viewModel.view = view;
+            view.ViewModel = viewModel;
+
+            model.AddNewUserEvent += viewModel.EventNewUser;
+            model.AddNewNotificationEvent += viewModel.EventNewNotification;
+
+            viewModel.AddNewUserEvent += view.EventNewUser;
+            viewModel.AddNewNotificationEvent += view.EventNewNotification;
+
+            desktopAppForm.Init();
+            Application.Run(desktopAppForm);
         }
     }
 }

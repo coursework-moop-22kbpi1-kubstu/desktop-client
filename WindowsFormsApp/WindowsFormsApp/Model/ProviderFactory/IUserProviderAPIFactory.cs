@@ -8,8 +8,8 @@ using WindowsFormsApp.Model.Provider;
 
 namespace WindowsFormsApp.Model.ProviderFactory
 {
-    internal interface IUserProviderAPIFactory : IProviderAPIFactory<User>
+    public interface IUserProviderAPIFactory : IProviderAPIFactory<User>
     {
-        IUserProvideAPI GetProviderAPI(Entities.Notification notification);
+        new IUserProvideAPI GetProviderAPI();
     }
 }

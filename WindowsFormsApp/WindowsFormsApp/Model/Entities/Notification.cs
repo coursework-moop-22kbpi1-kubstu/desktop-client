@@ -13,28 +13,41 @@ namespace WindowsFormsApp.Model.Entities
         public int Id
         {
             get { return id; }
-            set { id = value; }
+            set
+            {
+                if (id == -1 && value != -1)
+                {
+                    id = value;
+                }
+                else
+                {
+                    {
+                        throw new Exception("попытка присвовить ID, (Id = '" + id + "', value = '" + value + "')");
+                    }
+                }
+            }
         }
         public string Title
         {
             get { return title; }
-            set { title = value; }
+            //set { title = value; }
         }
         public string Message
         {
             get { return message; }
-            set { message = value; }
+            //set { message = value; }
         }
         public DateTime CreatedAt
         {
             get { return createdAt; }
-            set { createdAt = value; }
+            //set { createdAt = value; }
         }
-        public User Owner
+        public User UserOwner
         {
             get { return userOwner; }
-            set { userOwner = value; }
+            //set { userOwner = value; }
         }
+
         public Notification(int id, string title, string message, DateTime createdAt, User userOwner)
         {
             this.id = id;

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp.Model.Entities
 {
-    public class IEntity
+    public interface IEntity
     {
+        int Id { get; }
     }
 }
